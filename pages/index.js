@@ -36,7 +36,7 @@ export default function Home({data}) {
               <span><strong>{item.title}</strong></span>
               <span>{item.year}</span>
               <span>{item.description}</span>
-              <Link href={'/movies/${item.slug}'}>
+              <Link href={`/movies/${item.slug}`}>
                 <a>More about this movie</a>
               </Link>
             </li>
