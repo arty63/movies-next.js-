@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Link from 'next/link'
 
 import {PrismaClient} from '@prisma/client';
 import { useState } from 'react';
@@ -9,9 +10,11 @@ const prisma = new PrismaClient();
 export default function Home({data}) {
   
   const [formData, setFormData] = useState({})
+  const [movies, setmovies] = useState(data)
 
   async function saveMovie(e) {
     e.preventDefault()
+    setmovies([...movies, formData])
     const response = await fetch('api/movies', {
       method: 'POST',
       body: JSON.stringify(formData)
@@ -28,11 +31,14 @@ export default function Home({data}) {
 
       <main className={styles.main}>
         <ul className={styles.movelist}>
-          {data.map(item => (
+          {movies.map(item => (
             <li key={item.id}>{item.title}
               <span><strong>{item.title}</strong></span>
               <span>{item.year}</span>
               <span>{item.description}</span>
+              <Link href={'/movies/${item.slug}'}>
+                <a>More about this movie</a>
+              </Link>
             </li>
           ))}
         </ul>
